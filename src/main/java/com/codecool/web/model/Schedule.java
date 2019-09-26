@@ -2,15 +2,15 @@ package com.codecool.web.model;
 
 public class Schedule extends AbstractModel {
     
-    private String title;
     private int userId;
+    private String title;
     private int noDays;
     private boolean isPublished;
     
-    public Schedule(int id, String title, int userId, int noDays, boolean isPublished) {
+    public Schedule(int id, int userId, String title, int noDays, boolean isPublished) {
         super(id);
-        this.title = title;
         this.userId = userId;
+        this.title = title;
         this.noDays = noDays;
         this.isPublished = isPublished;
     }
