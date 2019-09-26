@@ -18,7 +18,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 
-@WebServlet("/RegistrationServlet")
+@WebServlet("/sign-up")
 public class SignUpServlet extends AbstractServlet {
     
     
@@ -32,9 +32,6 @@ public class SignUpServlet extends AbstractServlet {
             
             String name = req.getParameter("user_name");
             String mail = req.getParameter("email");
-            HttpSession session = req.getSession(false);
-            session.setAttribute("email", mail);
-            mail = (String) session.getAttribute("email");
             String role = req.getParameter("role");
             String password = req.getParameter("password");
             
@@ -42,7 +39,6 @@ public class SignUpServlet extends AbstractServlet {
                 User user = null;
                 us.addUser(name, mail, role, password);
                 user = us.getUser(mail);
-                session.setAttribute("user", user);
                 
                 RequestDispatcher rd = req.getRequestDispatcher("home.jsp");
                 rd.forward(req, resp);
