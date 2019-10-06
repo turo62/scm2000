@@ -6,15 +6,15 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface TaskDao {
-    public Task addTask(Task addedTask) throws SQLException;
+    Task add(Task addedTask) throws SQLException;
     
-    Task getByTaskId(int taskId);
+    Task getById(int taskId) throws SQLException;
     
-    List<Task> getTasksByUserId(int userId) throws SQLException;
+    List<Task> getByUserId(int userId) throws SQLException;
     
-    List<Task> getAllTasks() throws SQLException;
+    List<Task> getAll() throws SQLException;
     
-    void updateTask(int taskId, int userId, String title, String content) throws SQLException;
+    void update(int taskId, int userId, String title, String content) throws SQLException;
     
-    void deleteTask(int taskId) throws SQLException;
+    void delete(int taskId) throws SQLException;
 }

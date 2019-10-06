@@ -8,19 +8,21 @@ import java.util.List;
 
 public interface ScheduleDao {
     
-    public List<Schedule> listAll() throws SQLException;
+    List<Schedule> listAll() throws SQLException;
     
-    public Schedule findById(int schId) throws SQLException;
+    Schedule findById(int schId) throws SQLException;
     
-    public List<Schedule> allByUserId(int userId) throws SQLException;
+    List<Schedule> allByUserId(int userId) throws SQLException;
     
-    public Schedule addSchedule(Schedule addedSch) throws SQLException;
+    Schedule add(Schedule addedSch) throws SQLException;
     
-    public void updateSchedule(int id, String title, int noDays, boolean isPublished) throws SQLException;
+    void update(int id, String title, int noDays, boolean isPublished) throws SQLException;
     
-    public void deleteSchedule(int schId) throws SQLException;
+    void delete(int schId) throws SQLException;
     
-    public List<Schedule> listPublished() throws SQLException;
+    void publish(int schId) throws SQLException;
     
-    public Schedule fetchSchedule(ResultSet rs) throws SQLException;
+    List<Schedule> listPublished() throws SQLException;
+    
+    Schedule fetchSchedule(ResultSet rs) throws SQLException;
 }

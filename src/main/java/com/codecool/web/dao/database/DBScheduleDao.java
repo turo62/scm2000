@@ -59,7 +59,7 @@ public class DBScheduleDao extends AbstractDao implements ScheduleDao {
     
     }
     
-    public Schedule addSchedule(Schedule addedSch) throws SQLException {
+    public Schedule add(Schedule addedSch) throws SQLException {
         boolean autoCommit = connection.getAutoCommit();
         connection.setAutoCommit(false);
         
@@ -89,7 +89,7 @@ public class DBScheduleDao extends AbstractDao implements ScheduleDao {
         }
     }
     
-    public void updateSchedule(int id, String title, int noDays, boolean isPublished) throws SQLException {
+    public void update(int id, String title, int noDays, boolean isPublished) throws SQLException {
         String newTitle;
         int newNoDays;
         boolean newPublish;
@@ -139,7 +139,7 @@ public class DBScheduleDao extends AbstractDao implements ScheduleDao {
         }
     }
     
-    public void deleteSchedule(int schId) throws SQLException {
+    public void delete(int schId) throws SQLException {
         boolean autoCommit = connection.getAutoCommit();
         connection.setAutoCommit(false);
         
@@ -154,6 +154,20 @@ public class DBScheduleDao extends AbstractDao implements ScheduleDao {
             throw e;
         } finally {
             connection.setAutoCommit(autoCommit);
+        }
+    }
+    
+    @Override
+    public void publish(int schId) throws SQLException {
+    
+        String sql = "UPDATE schedules SET is_published=? WHERE schedule_id=?";
+    
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
+            
+            statement.setBoolean(1, true);
+            statement.setInt(2, schId);
+        
+            statement.executeUpdate();
         }
     }
     

@@ -15,7 +15,7 @@ public class DBTaskDao extends AbstractDao implements TaskDao {
     
     
     @Override
-    public Task addTask(Task addedTask) throws SQLException {
+    public Task add(Task addedTask) throws SQLException {
         boolean autoCommit = connection.getAutoCommit();
         connection.setAutoCommit(false);
     
@@ -45,7 +45,7 @@ public class DBTaskDao extends AbstractDao implements TaskDao {
     }
     
     @Override
-    public Task getByTaskId(int taskId) {
+    public Task getById(int taskId) throws SQLException {
         Task myTask = null;
         String sql = "SELECT * FROM Tasks WHERE Task_taskId = " + taskId;
     
@@ -56,8 +56,6 @@ public class DBTaskDao extends AbstractDao implements TaskDao {
             
             myTask = new  Task(rs.getInt("task_id"), rs.getInt("user_taskId"), rs.getString("title"), rs.getString("content"));
         
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         
         return myTask;
@@ -65,7 +63,7 @@ public class DBTaskDao extends AbstractDao implements TaskDao {
     }
     
     @Override
-    public List<Task> getTasksByUserId(int userId) throws SQLException {
+    public List<Task> getByUserId(int userId) throws SQLException {
         List<Task> tempList = new ArrayList<>();
     
         String sql = "SELECT * FROM tasks WHERE user_taskId" + userId;
@@ -81,7 +79,7 @@ public class DBTaskDao extends AbstractDao implements TaskDao {
     }
     
     @Override
-    public List<Task> getAllTasks() throws SQLException {
+    public List<Task> getAll() throws SQLException {
         List<Task> tempTaskList = new ArrayList<>();
     
         String sql = "SELECT * FROM rasks ORDER BY task_id";
@@ -97,11 +95,11 @@ public class DBTaskDao extends AbstractDao implements TaskDao {
     }
     
     @Override
-    public void updateTask(int taskId, int userId, String title, String content) throws SQLException {
+    public void update(int taskId, int userId, String title, String content) throws SQLException {
         String newTitle;
         String newContent;
     
-        Task actTask = getByTaskId(taskId);
+        Task actTask = getById(taskId);
         Task newTask = new Task(taskId, actTask.getUserId(), title, content);
     
         if (actTask.getTaskTitle().equals(newTask.getTaskTitle())) {
@@ -139,7 +137,7 @@ public class DBTaskDao extends AbstractDao implements TaskDao {
     }
     
     @Override
-    public void deleteTask(int taskId) throws SQLException {
+    public void delete(int taskId) throws SQLException {
         boolean autoCommit = connection.getAutoCommit();
         connection.setAutoCommit(false);
     
