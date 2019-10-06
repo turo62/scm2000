@@ -29,19 +29,18 @@ public class DBScheduleDao extends AbstractDao implements ScheduleDao {
     }
     
     public Schedule findById(int schId) throws SQLException {
+        Schedule mySchedule = null;
         String sql = "SELECT * FROM schedules WHERE schedule_id = " + schId;
         
         try(Statement statement = connection.createStatement()) {
             statement.executeQuery(sql);
             ResultSet rs = statement.executeQuery(sql);
-    
-            while (rs.next()) {
-                return new Schedule(rs.getInt("schedule_id"), rs.getInt("user_id"), rs.getString("schedule_title"), rs.getInt("day_number"), rs.getBoolean("is_published"));
-            }
-        
+            
+            mySchedule = new Schedule(rs.getInt("schedule_id"), rs.getInt("user_id"), rs.getString("schedule_title"), rs.getInt("day_number"), rs.getBoolean("is_published"));
+            
         }
         
-        return null;
+        return mySchedule;
     }
     
     public List<Schedule> allByUserId(int userId) throws SQLException {
@@ -159,18 +158,18 @@ public class DBScheduleDao extends AbstractDao implements ScheduleDao {
     }
     
     public List<Schedule> listPublished() throws SQLException {
-        List<Schedule> pubishedList = new ArrayList<>();
+        List<Schedule> publishedList = new ArrayList<>();
         
         String sql = "SELECT * FROM schedules WHERE is_published=true";
     
         try(Statement statement = connection.createStatement()) {
             ResultSet rs = statement.executeQuery(sql);
             while (rs.next()) {
-                pubishedList.add(fetchSchedule(rs));
+                publishedList.add(fetchSchedule(rs));
             }
         }
     
-        return pubishedList;
+        return publishedList;
     }
     
     public Schedule fetchSchedule(ResultSet rs) throws SQLException {
